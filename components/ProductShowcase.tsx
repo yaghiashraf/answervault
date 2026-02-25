@@ -287,17 +287,17 @@ export default function ProductShowcase() {
             <button
               key={s}
               onClick={() => setScreenIdx(i)}
-              className={`flex-1 text-center transition-all ${
-                i === screenIdx ? 'opacity-100' : 'opacity-40 hover:opacity-70'
-              }`}
+              className="flex-1 text-center transition-all"
             >
-              <div className={`h-1 rounded-full mb-1.5 overflow-hidden bg-gray-200`}>
+              <div className="h-1 rounded-full mb-1.5 overflow-hidden bg-white/20">
                 <div
-                  className="h-full bg-brand-500 rounded-full transition-none"
+                  className="h-full bg-white rounded-full transition-none"
                   style={{ width: i === screenIdx ? `${progressPct}%` : i < screenIdx ? '100%' : '0%' }}
                 />
               </div>
-              <span className="text-xs text-gray-500 font-medium">{SCREEN_LABELS[s]}</span>
+              <span className={`text-xs font-medium transition-colors ${
+                i === screenIdx ? 'text-white' : 'text-white/50'
+              }`}>{SCREEN_LABELS[s]}</span>
             </button>
           ))}
         </div>

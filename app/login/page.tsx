@@ -324,13 +324,12 @@ function LoginContent() {
                 href={STRIPE_LINK}
                 className="flex items-center justify-center gap-2 bg-white text-brand-700 font-semibold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors w-full shadow"
               >
-                {/* Stripe logo */}
-                <svg className="w-10 h-4" viewBox="0 0 60 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7.5 10.1c0-.8.7-1.1 1.7-1.1 1.5 0 3.5.5 5 1.3V6.2c-1.7-.7-3.3-1-5-1C5.7 5.2 3 6.9 3 10.4c0 5.4 7.4 4.5 7.4 6.8 0 .9-.8 1.2-1.9 1.2-1.6 0-3.8-.7-5.5-1.6v4.1c1.9.8 3.7 1.2 5.5 1.2 4.2 0 7-2.1 7-5.6-.1-5.8-7-4.7-7-6.4zM28.2 5.5l-2.7.6-.1 13.6h4.4V5.5h-1.6zm-6.7.7l-4.1 1V19.7h4.4V11c1-1.3 2.8-1.1 3.3-.9V6.2c-.6-.2-2.6-.5-3.6.8V6.2zm14.5-.3c-1.5 0-2.5.7-3.1 1.2l-.2-1h-3.9v18.7l4.4-1V20.4c.6.4 1.4.9 2.8.9 2.8 0 5.4-2.3 5.4-7.3 0-4.6-2.6-7.1-5.4-7.1zm-.9 10.9c-.9 0-1.5-.3-1.9-.8v-5.8c.4-.5 1-.8 1.9-.8 1.5 0 2.5 1.6 2.5 3.7 0 2.2-1 3.7-2.5 3.7zm13-11c-4.5 0-7.1 3.1-7.1 7.4 0 4.9 2.8 7.2 7.2 7.2 2.1 0 3.7-.5 5-1.2v-3.7c-1.3.7-2.7 1.1-4.4 1.1-1.7 0-3.3-.6-3.4-2.8h8.5v-1.8c0-4.1-2.2-6.2-5.8-6.2zm-2.7 6c0-2.1 1.3-3 2.6-3 1.3 0 2.5.9 2.5 3h-5.1zM55 7.2l-.3-1.2h-3.9V19.7h4.4V10.8c1-1.3 2.8-1.1 3.3-.9V6c-.6-.2-2.6-.5-3.5.9V7.2z" fill="#635BFF"/>
+                <svg className="w-4 h-4 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                 </svg>
                 Pay $499 — Instant Access
               </a>
-              <p className="text-indigo-200 text-xs text-center mt-3">Secure checkout · License key emailed instantly</p>
+              <p className="text-indigo-200 text-xs text-center mt-3">Secure checkout via Stripe · License key emailed instantly</p>
             </div>
           </div>
           <p className="text-center text-gray-400 text-sm mt-8">
