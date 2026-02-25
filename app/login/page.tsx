@@ -1,8 +1,108 @@
 'use client';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import ProductShowcase from '@/components/ProductShowcase';
+
+// ── FAQ data ──────────────────────────────────────────────────────────────────
+const FAQ_ITEMS = [
+  {
+    q: 'Do I need a GitHub account to use AnswerVault?',
+    a: 'No — the demo mode works without any sign-in at all. Click "Try Demo" to explore the full interface with pre-loaded data. A GitHub account is only required in paid mode to connect your repository where answers and evidence are stored.',
+  },
+  {
+    q: 'Where is my data stored?',
+    a: 'All your answers, evidence metadata, and questionnaire mappings are stored as plain YAML/JSON files in a GitHub repository you own. AnswerVault never stores your application data on shared servers — it reads and writes directly to your repo via the GitHub API.',
+  },
+  {
+    q: 'What questionnaire formats are supported?',
+    a: 'AnswerVault imports CSV and XLSX (Excel) questionnaire files. It uses flexible column detection to handle SIG Lite, CAIQ, CSA STAR, ISO 27001, SOC 2, NIST CSF, and custom formats. Any spreadsheet with columns for a question ID, question text, and section will work.',
+  },
+  {
+    q: 'What is the difference between demo and paid mode?',
+    a: 'Demo mode is always free and gives you a pre-loaded dataset of 20 answers, 10 evidence items, and a 30-question SIG-lite questionnaire. Exports are CSV only with a "DEMO – NOT FOR SUBMISSION" watermark, and no changes are saved to GitHub. Paid mode ($499 one-time) removes all limits, enables XLSX export, and saves all changes to your GitHub repo via pull requests.',
+  },
+  {
+    q: 'Can I use AnswerVault for multiple questionnaires?',
+    a: 'Yes. Paid mode supports unlimited questionnaires. You can import a new questionnaire any time, map it to answers in your library, and export it independently. Each questionnaire gets its own mapping file in your repo.',
+  },
+  {
+    q: 'Do I need to know how to code or manage servers?',
+    a: 'No coding or server management is required. AnswerVault deploys to Vercel in minutes — just click "Import from GitHub", set a few environment variables, and your instance is live. The only infrastructure you manage is a GitHub repository.',
+  },
+  {
+    q: 'What happens after I pay?',
+    a: 'After payment, you receive a license key by email within minutes. Add the key as a NEXT_PUBLIC-prefixed environment variable in your Vercel deployment and redeploy. Paid mode activates immediately. You also get access to the full source code on GitHub.',
+  },
+  {
+    q: 'Is XLSX export available in demo mode?',
+    a: 'No — XLSX export requires a valid license. Demo mode exports CSV only, with a watermark. This ensures the exported file is not used for actual submissions without a proper license.',
+  },
+  {
+    q: 'Can I modify the source code?',
+    a: 'Yes. A paid license includes access to the full source code and permits modification for your own internal use. You cannot resell the software or redistribute your license key, but you are free to adapt it to your specific workflows.',
+  },
+  {
+    q: 'Do you offer refunds?',
+    a: 'All sales are final. If the software does not work as described and the issue cannot be resolved, we will consider refund requests on a case-by-case basis. Please contact hello@answervault.app before purchasing if you have specific requirements you would like confirmed.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const JSON_LD = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      name: 'AnswerVault',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web',
+      url: 'https://answervault.vercel.app',
+      description: 'Respond to vendor security questionnaires 10× faster. Maintain a versioned Answer Library and Evidence Catalog powered by your GitHub repo.',
+      offers: { '@type': 'Offer', price: '499', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
+      aggregateRating: { '@type': 'AggregateRating', ratingValue: '5', reviewCount: '1' },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: FAQ_ITEMS.map(({ q, a }) => ({
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a },
+      })),
+    },
+  ],
+};
+
+// ── FAQ accordion ─────────────────────────────────────────────────────────────
+function FAQAccordion() {
+  const [open, setOpen] = useState<number | null>(null);
+  return (
+    <div className="divide-y divide-gray-200 rounded-xl border border-gray-200 bg-white overflow-hidden">
+      {FAQ_ITEMS.map((item, i) => (
+        <div key={i}>
+          <button
+            className="w-full text-left px-6 py-4 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors"
+            onClick={() => setOpen(open === i ? null : i)}
+            aria-expanded={open === i}
+          >
+            <span className="font-medium text-gray-900 text-sm">{item.q}</span>
+            <svg
+              className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform ${open === i ? 'rotate-180' : ''}`}
+              fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          {open === i && (
+            <div className="px-6 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+              {item.a}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
 
 const ERROR_MESSAGES: Record<string, string> = {
   state_mismatch: 'OAuth state mismatch – possible CSRF attempt. Please try again.',
@@ -94,6 +194,11 @@ function LoginContent() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* JSON-LD structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+      />
 
       {/* ── Nav ── */}
       <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
@@ -106,6 +211,7 @@ function LoginContent() {
             <a href="#features"     className="text-sm text-gray-500 hover:text-gray-900 hidden sm:block">Features</a>
             <a href="#how-it-works" className="text-sm text-gray-500 hover:text-gray-900 hidden sm:block">How it works</a>
             <a href="#pricing"      className="text-sm text-gray-500 hover:text-gray-900 hidden sm:block">Pricing</a>
+            <a href="#faq"          className="text-sm text-gray-500 hover:text-gray-900 hidden sm:block">FAQ</a>
             <a href="/api/auth/demo" className="btn-secondary text-sm py-2 hidden sm:inline-flex">Try Demo</a>
             <a href={loginUrl}       className="btn-primary text-sm py-2">Sign in</a>
           </div>
@@ -338,6 +444,21 @@ function LoginContent() {
         </div>
       </section>
 
+      {/* ── FAQ ── */}
+      <section id="faq" className="max-w-6xl mx-auto px-6 py-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Frequently asked questions</h2>
+          <p className="text-gray-500 text-lg">Everything you need to know before you start.</p>
+        </div>
+        <div className="max-w-3xl mx-auto">
+          <FAQAccordion />
+          <p className="text-center text-sm text-gray-400 mt-6">
+            Still have questions?{' '}
+            <a href="mailto:hello@answervault.app" className="text-brand-600 hover:underline">Email us →</a>
+          </p>
+        </div>
+      </section>
+
       {/* ── Sign-in card ── */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="max-w-md mx-auto">
@@ -384,15 +505,23 @@ function LoginContent() {
 
       {/* ── Footer ── */}
       <footer className="border-t border-gray-100 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-400">
-          <div className="flex items-center gap-2">
-            <Image src="/logo.svg" alt="AnswerVault" width={20} height={20} />
-            <span>AnswerVault · Security questionnaire platform</span>
+        <div className="max-w-6xl mx-auto px-6 py-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-400">
+            <div className="flex items-center gap-2">
+              <Image src="/logo.svg" alt="AnswerVault" width={20} height={20} />
+              <span>AnswerVault · Security questionnaire platform</span>
+            </div>
+            <div className="flex items-center flex-wrap justify-center gap-x-6 gap-y-2">
+              <a href="#features"     className="hover:text-gray-600">Features</a>
+              <a href="#pricing"      className="hover:text-gray-600">Pricing</a>
+              <a href="#faq"          className="hover:text-gray-600">FAQ</a>
+              <a href="/privacy"      className="hover:text-gray-600">Privacy</a>
+              <a href="/terms"        className="hover:text-gray-600">Terms</a>
+              <a href="https://github.com/yaghiashraf/answervault" target="_blank" rel="noreferrer" className="hover:text-gray-600">GitHub</a>
+              <a href="mailto:hello@answervault.app" className="hover:text-gray-600">Contact</a>
+            </div>
           </div>
-          <div className="flex items-center gap-6">
-            <a href="https://github.com/yaghiashraf/answervault" target="_blank" rel="noreferrer" className="hover:text-gray-600">GitHub</a>
-            <a href="mailto:hello@answervault.app" className="hover:text-gray-600">Contact</a>
-          </div>
+          <p className="text-center text-xs text-gray-300 mt-4">© 2026 AnswerVault · All rights reserved</p>
         </div>
       </footer>
     </div>
