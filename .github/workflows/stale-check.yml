@@ -1,0 +1,31 @@
+name: Weekly Staleness Check
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # Every Monday at 09:00 UTC
+  workflow_dispatch:        # Allow manual run
+
+jobs:
+  stale-check:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install --prefix .github/workflows/scripts js-yaml
+
+      - name: Run staleness check
+        run: node .github/workflows/scripts/stale-check.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          STALE_ANSWER_DAYS: ${{ vars.STALE_ANSWER_DAYS || '180' }}
+          STALE_EVIDENCE_DAYS: ${{ vars.STALE_EVIDENCE_DAYS || '365' }}

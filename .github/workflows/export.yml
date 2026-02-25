@@ -1,0 +1,55 @@
+name: Export Questionnaire
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'Questionnaire slug (e.g. acme-sig-2025)'
+        required: true
+        type: string
+      format:
+        description: 'Export format'
+        required: true
+        default: 'xlsx'
+        type: choice
+        options:
+          - xlsx
+          - csv
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install --prefix .github/workflows/scripts js-yaml papaparse xlsx
+
+      - name: Generate export
+        run: node .github/workflows/scripts/export.js "${{ inputs.slug }}" "${{ inputs.format }}"
+        env:
+          SLUG: ${{ inputs.slug }}
+          FORMAT: ${{ inputs.format }}
+
+      - name: Upload export artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: export-${{ inputs.slug }}-${{ inputs.format }}-${{ github.run_number }}
+          path: exports/
+          retention-days: 30
+
+      - name: Commit exports to repo (optional)
+        if: success()
+        run: |
+          git config user.name "AnswerVault Bot"
+          git config user.email "bot@answervault"
+          git add exports/ || true
+          git diff --staged --quiet || git commit -m "chore: export ${{ inputs.slug }} [${{ github.run_number }}]"
+          git push || true

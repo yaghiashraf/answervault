@@ -1,0 +1,24 @@
+id: ans-001
+title: Encryption at Rest
+intent_keywords:
+  - encryption
+  - at rest
+  - AES
+  - storage
+  - disk encryption
+  - data protection
+short_answer: All customer data is encrypted at rest using AES-256-GCM with AWS-managed or customer-managed keys.
+tags:
+  - encryption
+  - data-protection
+  - infrastructure
+frameworks:
+  - SOC2
+  - ISO27001
+  - CAIQ
+  - SIG
+owner: security@company.example
+last_reviewed: "2025-06-01"
+evidence_ids:
+  - ev-001
+  - ev-002

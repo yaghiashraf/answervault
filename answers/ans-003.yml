@@ -1,0 +1,23 @@
+id: ans-003
+title: Incident Response Plan
+intent_keywords:
+  - incident response
+  - IRP
+  - breach
+  - security event
+  - incident management
+  - CSIRT
+  - notification
+short_answer: We maintain a documented Incident Response Plan (IRP) tested annually. Security incidents are tracked, escalated, and reported per NIST SP 800-61 and GDPR 72-hour notification requirements.
+tags:
+  - incident-response
+  - governance
+  - operations
+frameworks:
+  - SOC2
+  - ISO27001
+  - SIG
+owner: security@company.example
+last_reviewed: "2025-01-10"
+evidence_ids:
+  - ev-003

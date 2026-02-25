@@ -1,0 +1,14 @@
+A.1:
+  answer_id: ans-004
+A.2:
+  answer_id: ans-003
+  override_text: MFA is enforced for all privileged accounts using TOTP or WebAuthn.
+B.1:
+  answer_id: ans-001
+B.2:
+  answer_id: ans-002
+C.1:
+  answer_id: ans-003
+C.2:
+  answer_id: ans-003
+  override_text: Customers are notified within 72 hours of a confirmed breach per GDPR Article 33.

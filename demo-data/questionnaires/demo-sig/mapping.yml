@@ -1,0 +1,66 @@
+A.1:
+  answer_id: ans-004
+A.2:
+  answer_id: ans-003
+A.3:
+  answer_id: ans-004
+  override_text: Access reviews are conducted quarterly by the Security team. Results are documented and actioned within 30 days.
+A.4:
+  answer_id: ans-004
+  override_text: Upon employee departure, IT revokes all access within 4 hours of HR notification. Accounts are disabled, MFA revoked, and shared credentials rotated.
+B.1:
+  answer_id: ans-001
+B.2:
+  answer_id: ans-002
+B.3:
+  answer_id: ans-017
+C.1:
+  answer_id: ans-005
+C.2:
+  answer_id: ans-005
+  override_text: Customers are notified within 72 hours of a confirmed breach, per GDPR Article 33. We provide incident updates every 24 hours until closure.
+C.3:
+  answer_id: ans-005
+D.1:
+  answer_id: ans-006
+D.2:
+  answer_id: ans-012
+D.3:
+  answer_id: ans-006
+  override_text: Critical vulnerabilities are patched within 24 hours. High within 7 days. Medium within 30 days. Low within 90 days.
+E.1:
+  answer_id: ans-014
+E.2:
+  answer_id: ans-010
+E.3:
+  answer_id: ans-007
+F.1:
+  answer_id: ans-013
+F.2:
+  answer_id: ans-016
+G.1:
+  answer_id: ans-008
+G.2:
+  answer_id: ans-008
+  override_text: Background checks are conducted for all employees and contractors with access to production systems, subject to local law.
+H.1:
+  answer_id: ans-015
+H.2:
+  answer_id: ans-015
+I.1:
+  answer_id: ans-020
+I.2:
+  answer_id: ans-020
+I.3:
+  answer_id: ans-019
+J.1:
+  answer_id: ans-009
+J.2:
+  answer_id: ans-009
+K.1:
+  answer_id: ans-011
+K.2:
+  answer_id: ans-007
+  override_text: RTO is 4 hours. RPO is 1 hour. Documented in our MSA. Enterprise customers can negotiate tighter SLAs.
+K.3:
+  answer_id: ans-011

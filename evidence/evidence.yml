@@ -1,0 +1,33 @@
+- id: ev-001
+  title: SOC 2 Type II Report (Current Year)
+  type: doc
+  url_or_path: https://trust.company.example/soc2
+  description: Annual SOC 2 Type II audit report covering Security, Availability, and Confidentiality Trust Services Criteria. Available under NDA upon request.
+  last_updated: "2025-01-15"
+  tags:
+    - audit
+    - SOC2
+    - compliance
+    - assurance
+
+- id: ev-002
+  title: Encryption Architecture Document
+  type: file
+  url_or_path: evidence/files/encryption-architecture.pdf
+  description: Internal document describing encryption implementation – AES-256-GCM at rest, TLS 1.2+ in transit, KMS key hierarchy and rotation schedule.
+  last_updated: "2025-03-01"
+  tags:
+    - encryption
+    - architecture
+    - technical
+
+- id: ev-003
+  title: Incident Response Plan (IRP)
+  type: file
+  url_or_path: evidence/files/incident-response-plan.pdf
+  description: Documented IRP following NIST SP 800-61 Rev. 2. Includes CSIRT charter, severity matrix, runbooks, escalation contacts, and communication templates.
+  last_updated: "2025-01-10"
+  tags:
+    - incident-response
+    - policy
+    - operations

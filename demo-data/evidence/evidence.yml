@@ -1,0 +1,82 @@
+# Demo Evidence Catalog – CloudWidget Inc. (Demo Company)
+# 10 items · Read-only in demo mode
+
+- id: ev-001
+  title: SOC 2 Type II Report (2024)
+  type: doc
+  url_or_path: https://trust.cloudwidget.example/soc2-2024
+  description: Annual SOC 2 Type II audit report covering Security, Availability, and Confidentiality Trust Services Criteria. Available under NDA.
+  last_updated: "2025-01-15"
+  tags: [audit, SOC2, compliance, assurance]
+
+- id: ev-002
+  title: Encryption Architecture Document
+  type: doc
+  url_or_path: evidence/files/encryption-architecture.pdf
+  description: Internal document describing encryption implementation – AES-256-GCM at rest, TLS 1.2+ in transit, KMS key hierarchy and rotation schedule.
+  last_updated: "2025-03-01"
+  tags: [encryption, architecture, technical]
+
+- id: ev-003
+  title: Access Control Policy
+  type: doc
+  url_or_path: evidence/files/access-control-policy.pdf
+  description: Formal policy document covering RBAC framework, MFA requirements, access reviews, and privileged access management.
+  last_updated: "2025-02-01"
+  tags: [access-control, policy, MFA, RBAC]
+
+- id: ev-004
+  title: Incident Response Plan
+  type: doc
+  url_or_path: evidence/files/incident-response-plan.pdf
+  description: Documented IRP following NIST SP 800-61. Includes CSIRT charter, runbooks, escalation matrix, and communication templates.
+  last_updated: "2025-01-10"
+  tags: [incident-response, policy, operations]
+
+- id: ev-005
+  title: Penetration Test Report Summary (2024)
+  type: doc
+  url_or_path: evidence/files/pentest-summary-2024.pdf
+  description: Executive summary from annual penetration test by SecureStrike LLC. All High/Critical findings remediated. Full report available under NDA.
+  last_updated: "2024-11-30"
+  tags: [penetration-test, assessment, security-testing]
+
+- id: ev-006
+  title: SDLC and Change Management Policy
+  type: doc
+  url_or_path: evidence/files/sdlc-policy.pdf
+  description: SDLC and Change Management policy covering code review requirements, CI/CD security gates, and deployment approvals.
+  last_updated: "2025-03-01"
+  tags: [sdlc, change-management, policy]
+
+- id: ev-007
+  title: Business Continuity and DR Plan
+  type: doc
+  url_or_path: evidence/files/bcp-dr-plan.pdf
+  description: BCP and Disaster Recovery Plan including RTO/RPO commitments, multi-region architecture diagram, and tabletop exercise results.
+  last_updated: "2025-01-10"
+  tags: [bcp, disaster-recovery, resilience]
+
+- id: ev-008
+  title: Security Training Completion Report
+  type: doc
+  url_or_path: evidence/files/training-completion-2024.pdf
+  description: Annual security awareness training completion report showing 100% employee completion for FY2024. Includes phishing simulation metrics.
+  last_updated: "2025-01-31"
+  tags: [training, awareness, compliance]
+
+- id: ev-009
+  title: Privacy Policy and DPA Template
+  type: link
+  url_or_path: https://cloudwidget.example/legal/privacy
+  description: Public privacy policy and Data Processing Agreement template for GDPR compliance. Covers lawful basis, sub-processors, and subject rights.
+  last_updated: "2025-02-15"
+  tags: [privacy, gdpr, legal, DPA]
+
+- id: ev-010
+  title: CSA STAR Self-Assessment
+  type: link
+  url_or_path: https://cloudsecurityalliance.org/star/registry/cloudwidget
+  description: Cloud Security Alliance STAR Level 1 Self-Assessment on the CSA registry. Covers CAIQ v4 controls.
+  last_updated: "2025-01-01"
+  tags: [CSA, STAR, CAIQ, cloud-security]

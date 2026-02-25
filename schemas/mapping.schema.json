@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://answervault.dev/schemas/mapping.schema.json",
+  "title": "Mapping",
+  "description": "Maps questionnaire QIDs to Answer Library IDs",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "required": ["answer_id"],
+    "additionalProperties": false,
+    "properties": {
+      "answer_id": {
+        "oneOf": [
+          { "type": "string", "pattern": "^ans-[0-9]{3,}$" },
+          { "type": "null" }
+        ]
+      },
+      "override_text": {
+        "type": "string",
+        "maxLength": 5000,
+        "description": "Optional per-question answer override. If set, this text is used in exports instead of the canonical short_answer."
+      }
+    }
+  }
+}

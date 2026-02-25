@@ -1,0 +1,31 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { getSession } from '@/lib/session';
+import { GitHubClient } from '@/lib/github';
+import { getLicenseStatus } from '@/lib/license';
+import { DEMO_ANSWERS } from '@/lib/demo-data';
+
+export async function GET(
+  _request: NextRequest,
+  context: { params: Promise<{ id: string }> },
+) {
+  const { id } = await context.params;
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const license = getLicenseStatus(session.selected_repo);
+
+  if (license.demo) {
+    const answer = DEMO_ANSWERS.find((a) => a.id === id);
+    if (!answer) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    return NextResponse.json({ answer });
+  }
+
+  if (!session.selected_repo) {
+    return NextResponse.json({ error: 'No repo selected' }, { status: 400 });
+  }
+
+  const client = new GitHubClient(session.github_access_token, session.selected_repo);
+  const answer = await client.getAnswer(id);
+  if (!answer) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  return NextResponse.json({ answer });
+}

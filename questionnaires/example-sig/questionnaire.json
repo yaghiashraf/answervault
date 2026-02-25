@@ -1,0 +1,13 @@
+{
+  "slug": "example-sig",
+  "source_filename": "SIG-Lite-Example.csv",
+  "imported_at": "2025-06-01T00:00:00.000Z",
+  "questions": [
+    { "qid": "A.1", "section": "Access Control", "text": "Does your organization implement role-based access control (RBAC)?", "answer_type": "yes_no" },
+    { "qid": "A.2", "section": "Access Control", "text": "Is multi-factor authentication (MFA) required for all privileged accounts?", "answer_type": "yes_no" },
+    { "qid": "B.1", "section": "Cryptography", "text": "Is data at rest encrypted? Describe the algorithm used.", "answer_type": "text" },
+    { "qid": "B.2", "section": "Cryptography", "text": "Is data in transit encrypted using TLS 1.2 or higher?", "answer_type": "yes_no" },
+    { "qid": "C.1", "section": "Incident Management", "text": "Do you have a documented Incident Response Plan?", "answer_type": "yes_no" },
+    { "qid": "C.2", "section": "Incident Management", "text": "How quickly do you notify customers of a confirmed data breach?", "answer_type": "text" }
+  ]
+}

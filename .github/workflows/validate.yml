@@ -1,0 +1,27 @@
+name: Validate Data Schemas
+
+on:
+  pull_request:
+    paths:
+      - 'answers/**'
+      - 'evidence/**'
+      - 'questionnaires/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install --prefix .github/workflows/scripts js-yaml ajv
+
+      - name: Validate schemas
+        run: node .github/workflows/scripts/validate.js
+        env:
+          GITHUB_WORKSPACE: ${{ github.workspace }}

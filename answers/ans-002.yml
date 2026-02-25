@@ -1,0 +1,23 @@
+id: ans-002
+title: Encryption in Transit
+intent_keywords:
+  - TLS
+  - HTTPS
+  - transit
+  - in-flight
+  - transport security
+  - SSL
+  - network encryption
+short_answer: All data in transit is protected by TLS 1.2 or higher. TLS 1.0 and 1.1 are disabled across all endpoints.
+tags:
+  - encryption
+  - network
+  - tls
+frameworks:
+  - SOC2
+  - ISO27001
+  - CAIQ
+owner: security@company.example
+last_reviewed: "2025-06-01"
+evidence_ids:
+  - ev-002

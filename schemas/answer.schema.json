@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://answervault.dev/schemas/answer.schema.json",
+  "title": "Answer",
+  "description": "A canonical answer in the AnswerVault Answer Library",
+  "type": "object",
+  "required": ["id", "title", "intent_keywords", "short_answer", "tags", "frameworks", "owner", "last_reviewed", "evidence_ids"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^ans-[0-9]{3,}$",
+      "description": "Unique answer ID, format ans-NNN"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 200
+    },
+    "intent_keywords": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "Keywords used for auto-matching questions to this answer"
+    },
+    "short_answer": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 1000,
+      "description": "One to three sentence concise answer"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "frameworks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["SOC2", "ISO27001", "CAIQ", "SIG", "HIPAA", "PCI-DSS", "NIST", "CIS", "GDPR", "FedRAMP"]
+      },
+      "description": "Compliance frameworks this answer is relevant to"
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Email or name of the person responsible for keeping this answer current"
+    },
+    "last_reviewed": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "Date the answer was last reviewed in YYYY-MM-DD format"
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^ev-[0-9]{3,}$"
+      },
+      "description": "IDs of evidence items from evidence.yml that support this answer"
+    }
+  }
+}
