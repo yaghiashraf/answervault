@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
+import ProductShowcase from '@/components/ProductShowcase';
 
 const ERROR_MESSAGES: Record<string, string> = {
   state_mismatch: 'OAuth state mismatch – possible CSRF attempt. Please try again.',
@@ -26,7 +27,7 @@ const FEATURES = [
       </svg>
     ),
     title: 'Evidence Catalog',
-    desc: 'Track certificates, audit reports, and policy docs with expiry dates. Get automatic staleness alerts via GitHub Issues.',
+    desc: 'Track certificates, audit reports, and policy docs with expiry dates. Automatic staleness alerts via GitHub Issues.',
   },
   {
     icon: (
@@ -35,7 +36,7 @@ const FEATURES = [
       </svg>
     ),
     title: 'Questionnaire Import',
-    desc: 'Upload any SIG, CAIQ, or custom CSV/XLSX questionnaire. AI-assisted mapping suggests the best answer for each question.',
+    desc: 'Upload any SIG, CAIQ, or custom CSV/XLSX. AI-assisted mapping suggests the best answer for each question.',
   },
   {
     icon: (
@@ -44,7 +45,7 @@ const FEATURES = [
       </svg>
     ),
     title: 'Smart Mapping',
-    desc: 'Map questions to answers in a structured grid. Override individual responses, track completion percentage per section.',
+    desc: 'Map questions to answers in a structured grid. Override individual responses, track completion per section.',
   },
   {
     icon: (
@@ -53,7 +54,7 @@ const FEATURES = [
       </svg>
     ),
     title: 'Export Ready',
-    desc: 'One-click CSV and XLSX export with completed answers, evidence index, and coverage report — submission-ready instantly.',
+    desc: 'One-click CSV and XLSX export with completed answers, evidence index, and coverage report — submission-ready.',
   },
   {
     icon: (
@@ -62,18 +63,28 @@ const FEATURES = [
       </svg>
     ),
     title: 'GitHub-Native Storage',
-    desc: 'Your data never leaves your GitHub repo. Every change goes through a PR — full audit trail, no third-party database.',
+    desc: 'Your data never leaves your GitHub repo. Every change goes through a PR — full audit trail, no database.',
   },
 ];
 
 const HOW_IT_WORKS = [
-  { step: '01', title: 'Connect your repo', desc: 'Sign in with GitHub and select the repo where your answers and evidence will live.' },
-  { step: '02', title: 'Build your library', desc: 'Add reusable answers and upload supporting evidence. Everything is stored as files in your repo.' },
-  { step: '03', title: 'Import questionnaires', desc: 'Upload any CSV or XLSX questionnaire. AnswerVault parses it and creates a structured mapping grid.' },
-  { step: '04', title: 'Map and export', desc: 'Assign answers to questions, review, and export a polished, submission-ready response.' },
+  { step: 1, title: 'Connect your repo', desc: 'Sign in with GitHub and select the repo where your answers and evidence will live.' },
+  { step: 2, title: 'Build your library', desc: 'Add reusable answers and upload supporting evidence. Stored as files in your repo.' },
+  { step: 3, title: 'Import questionnaires', desc: 'Upload any CSV or XLSX questionnaire. AnswerVault parses it into a structured mapping grid.' },
+  { step: 4, title: 'Map and export', desc: 'Assign answers to questions, review, and export a polished submission-ready response.' },
 ];
 
 const FRAMEWORKS = ['SIG Lite', 'CAIQ', 'CSA STAR', 'ISO 27001', 'SOC 2', 'NIST CSF', 'Custom'];
+
+const STRIPE_LINK = process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK ?? '#pricing';
+
+function GitHubIcon() {
+  return (
+    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+      <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+    </svg>
+  );
+}
 
 function LoginContent() {
   const params = useSearchParams();
@@ -85,17 +96,18 @@ function LoginContent() {
     <div className="min-h-screen bg-white">
 
       {/* ── Nav ── */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-100">
+      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <Image src="/logo.svg" alt="AnswerVault" width={32} height={32} />
             <span className="font-bold text-gray-900 text-lg">AnswerVault</span>
           </div>
           <div className="flex items-center gap-6">
-            <a href="#features" className="text-sm text-gray-500 hover:text-gray-900 hidden sm:block">Features</a>
+            <a href="#features"     className="text-sm text-gray-500 hover:text-gray-900 hidden sm:block">Features</a>
             <a href="#how-it-works" className="text-sm text-gray-500 hover:text-gray-900 hidden sm:block">How it works</a>
-            <a href="#pricing" className="text-sm text-gray-500 hover:text-gray-900 hidden sm:block">Pricing</a>
-            <a href={loginUrl} className="btn-primary text-sm py-2">Sign in with GitHub</a>
+            <a href="#pricing"      className="text-sm text-gray-500 hover:text-gray-900 hidden sm:block">Pricing</a>
+            <a href="/api/auth/demo" className="btn-secondary text-sm py-2 hidden sm:inline-flex">Try Demo</a>
+            <a href={loginUrl}       className="btn-primary text-sm py-2">Sign in</a>
           </div>
         </div>
       </nav>
@@ -106,34 +118,43 @@ function LoginContent() {
           <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl" />
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-300 rounded-full blur-3xl" />
         </div>
-        <div className="relative max-w-6xl mx-auto px-6 py-24 lg:py-32">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm mb-6">
-              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              GitHub-native · Zero infra · One-time license
+        <div className="relative max-w-6xl mx-auto px-6 py-16 lg:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left copy */}
+            <div>
+              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm mb-6">
+                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                GitHub-native · Zero infra · One-time license
+              </div>
+              <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-6">
+                Answer security questionnaires
+                <span className="text-indigo-300"> 10× faster</span>
+              </h1>
+              <p className="text-lg text-indigo-100 mb-8 leading-relaxed">
+                AnswerVault turns your GitHub repo into a versioned Answer Library, Evidence Catalog, and questionnaire response engine. No SaaS subscriptions, no data leaving your infrastructure.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <a href="/api/auth/demo" className="inline-flex items-center gap-2 bg-white text-brand-700 font-semibold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors shadow-lg">
+                  ✨ Try Demo Free
+                </a>
+                <a href={loginUrl} className="inline-flex items-center gap-2.5 border border-white/30 text-white font-medium px-6 py-3 rounded-lg hover:bg-white/10 transition-colors">
+                  <GitHubIcon /> Sign in with GitHub
+                </a>
+              </div>
+              <p className="text-indigo-300 text-sm mt-4">No sign-up needed for demo. GitHub OAuth only required for saving changes.</p>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              Answer security questionnaires
-              <span className="text-indigo-300"> 10× faster</span>
-            </h1>
-            <p className="text-lg sm:text-xl text-indigo-100 mb-8 leading-relaxed max-w-2xl">
-              AnswerVault is a self-hosted platform that turns your GitHub repo into a versioned Answer Library, Evidence Catalog, and questionnaire response engine — no SaaS subscriptions, no data leaving your infrastructure.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <a href={loginUrl} className="inline-flex items-center gap-2.5 bg-white text-brand-700 font-semibold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors shadow-lg">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                </svg>
-                Try Demo — Free
-              </a>
-              <a href="#pricing" className="inline-flex items-center gap-2 border border-white/30 text-white font-medium px-6 py-3 rounded-lg hover:bg-white/10 transition-colors">
-                View Pricing →
-              </a>
+            {/* Right: product showcase */}
+            <div className="hidden lg:block">
+              <ProductShowcase />
             </div>
-            <p className="text-indigo-300 text-sm mt-4">No license key needed to explore. Demo mode is always free.</p>
           </div>
         </div>
       </section>
+
+      {/* Mobile showcase (below hero) */}
+      <div className="lg:hidden px-6 py-10 bg-gray-50 border-b border-gray-100">
+        <ProductShowcase />
+      </div>
 
       {/* ── Frameworks strip ── */}
       <div className="border-b border-gray-100 bg-gray-50">
@@ -149,7 +170,7 @@ function LoginContent() {
       <section id="features" className="max-w-6xl mx-auto px-6 py-20">
         <div className="text-center mb-14">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Everything you need to respond faster</h2>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto">Built for security teams who respond to vendor questionnaires repeatedly and need a system — not a spreadsheet.</p>
+          <p className="text-gray-500 text-lg max-w-2xl mx-auto">Built for security teams who answer vendor questionnaires repeatedly and need a system, not a spreadsheet.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {FEATURES.map((f) => (
@@ -169,21 +190,26 @@ function LoginContent() {
         <div className="max-w-6xl mx-auto px-6 py-20">
           <div className="text-center mb-14">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Up and running in minutes</h2>
-            <p className="text-gray-500 text-lg">No infrastructure to provision. Deploy to Vercel, connect your GitHub repo, start building your library.</p>
+            <p className="text-gray-500 text-lg">No infrastructure to provision. Deploy to Vercel, connect your GitHub repo, start building.</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {HOW_IT_WORKS.map((s, i) => (
-              <div key={s.step} className="relative">
-                {i < HOW_IT_WORKS.length - 1 && (
-                  <div className="hidden lg:block absolute top-5 left-full w-full h-px bg-gradient-to-r from-brand-200 to-transparent z-0" />
-                )}
-                <div className="relative z-10">
-                  <div className="text-4xl font-black text-brand-100 mb-3 leading-none">{s.step}</div>
+
+          {/* Timeline */}
+          <div className="relative">
+            {/* Connecting line (desktop) */}
+            <div className="hidden lg:block absolute top-8 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-200 to-transparent" style={{ left: '12.5%', right: '12.5%' }} />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+              {HOW_IT_WORKS.map((s) => (
+                <div key={s.step} className="flex flex-col items-center text-center">
+                  {/* Circle badge above the line */}
+                  <div className="relative z-10 w-16 h-16 rounded-full bg-white border-2 border-brand-200 flex items-center justify-center mb-4 shadow-sm">
+                    <span className="text-xl font-black text-brand-600">0{s.step}</span>
+                  </div>
                   <h3 className="font-semibold text-gray-900 mb-2">{s.title}</h3>
                   <p className="text-sm text-gray-500 leading-relaxed">{s.desc}</p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -195,7 +221,7 @@ function LoginContent() {
             <div className="text-brand-400 text-sm font-semibold uppercase tracking-wider mb-3">Why GitHub as your backend</div>
             <h2 className="text-2xl sm:text-3xl font-bold mb-4">Your data, your repo, your rules</h2>
             <p className="text-gray-300 leading-relaxed mb-6">
-              Every answer, evidence file, and questionnaire mapping is stored as a plain YAML/JSON file in a GitHub repo you control. Edits go through pull requests — giving you code review, diff history, and rollback for free.
+              Every answer, evidence file, and questionnaire mapping is stored as a plain YAML/JSON file in a repo you control. Edits go through pull requests — giving you code review, diff history, and rollback for free.
             </p>
             <ul className="space-y-3">
               {[
@@ -203,7 +229,7 @@ function LoginContent() {
                 'PR-based change review for every edit',
                 'Works with private repos — data never leaves GitHub',
                 'GitHub Actions for automated exports and stale checks',
-                'Zero vendor lock-in — your files are readable without AnswerVault',
+                'Zero vendor lock-in — files are readable without AnswerVault',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2.5 text-sm text-gray-300">
                   <svg className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -219,7 +245,7 @@ function LoginContent() {
             <div className="space-y-1">
               <div><span className="text-blue-400">answers/</span></div>
               <div className="ml-3"><span className="text-emerald-400">ans-001.yml</span> <span className="text-gray-600">← reusable answer</span></div>
-              <div className="ml-3"><span className="text-emerald-400">ans-001.md</span> <span className="text-gray-600">← long-form text</span></div>
+              <div className="ml-3"><span className="text-emerald-400">ans-001.md</span>  <span className="text-gray-600">← long-form text</span></div>
               <div><span className="text-blue-400">evidence/</span></div>
               <div className="ml-3"><span className="text-emerald-400">evidence.yml</span> <span className="text-gray-600">← cert catalog</span></div>
               <div><span className="text-blue-400">questionnaires/</span></div>
@@ -251,7 +277,7 @@ function LoginContent() {
                   '1 questionnaire (30 questions max)',
                   'CSV export with demo watermark',
                   'All UI features accessible',
-                  'No GitHub writes',
+                  'No GitHub writes or sign-in required',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2.5 text-sm text-gray-600">
                     <svg className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -261,7 +287,7 @@ function LoginContent() {
                   </li>
                 ))}
               </ul>
-              <a href={loginUrl} className="btn-secondary w-full justify-center py-3 text-sm font-medium">
+              <a href="/api/auth/demo" className="btn-secondary w-full justify-center py-3 text-sm font-medium">
                 Try Demo Free →
               </a>
             </div>
@@ -295,15 +321,18 @@ function LoginContent() {
                 ))}
               </ul>
               <a
-                href="mailto:hello@answervault.app?subject=AnswerVault%20License"
-                className="block text-center bg-white text-brand-700 font-semibold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors w-full shadow"
+                href={STRIPE_LINK}
+                className="flex items-center justify-center gap-2 bg-white text-brand-700 font-semibold px-6 py-3 rounded-lg hover:bg-indigo-50 transition-colors w-full shadow"
               >
-                Get License — $499
+                {/* Stripe logo */}
+                <svg className="w-10 h-4" viewBox="0 0 60 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.5 10.1c0-.8.7-1.1 1.7-1.1 1.5 0 3.5.5 5 1.3V6.2c-1.7-.7-3.3-1-5-1C5.7 5.2 3 6.9 3 10.4c0 5.4 7.4 4.5 7.4 6.8 0 .9-.8 1.2-1.9 1.2-1.6 0-3.8-.7-5.5-1.6v4.1c1.9.8 3.7 1.2 5.5 1.2 4.2 0 7-2.1 7-5.6-.1-5.8-7-4.7-7-6.4zM28.2 5.5l-2.7.6-.1 13.6h4.4V5.5h-1.6zm-6.7.7l-4.1 1V19.7h4.4V11c1-1.3 2.8-1.1 3.3-.9V6.2c-.6-.2-2.6-.5-3.6.8V6.2zm14.5-.3c-1.5 0-2.5.7-3.1 1.2l-.2-1h-3.9v18.7l4.4-1V20.4c.6.4 1.4.9 2.8.9 2.8 0 5.4-2.3 5.4-7.3 0-4.6-2.6-7.1-5.4-7.1zm-.9 10.9c-.9 0-1.5-.3-1.9-.8v-5.8c.4-.5 1-.8 1.9-.8 1.5 0 2.5 1.6 2.5 3.7 0 2.2-1 3.7-2.5 3.7zm13-11c-4.5 0-7.1 3.1-7.1 7.4 0 4.9 2.8 7.2 7.2 7.2 2.1 0 3.7-.5 5-1.2v-3.7c-1.3.7-2.7 1.1-4.4 1.1-1.7 0-3.3-.6-3.4-2.8h8.5v-1.8c0-4.1-2.2-6.2-5.8-6.2zm-2.7 6c0-2.1 1.3-3 2.6-3 1.3 0 2.5.9 2.5 3h-5.1zM55 7.2l-.3-1.2h-3.9V19.7h4.4V10.8c1-1.3 2.8-1.1 3.3-.9V6c-.6-.2-2.6-.5-3.5.9V7.2z" fill="#635BFF"/>
+                </svg>
+                Pay $499 — Instant Access
               </a>
-              <p className="text-indigo-200 text-xs text-center mt-3">Reply with your GitHub repo. License key sent within 24h.</p>
+              <p className="text-indigo-200 text-xs text-center mt-3">Secure checkout · License key emailed instantly</p>
             </div>
           </div>
-
           <p className="text-center text-gray-400 text-sm mt-8">
             Questions? Email <a href="mailto:hello@answervault.app" className="text-brand-600 hover:underline">hello@answervault.app</a>
           </p>
@@ -316,30 +345,38 @@ function LoginContent() {
           <div className="text-center mb-8">
             <Image src="/logo.svg" alt="AnswerVault" width={56} height={56} className="mx-auto mb-4 drop-shadow" />
             <h2 className="text-2xl font-bold text-gray-900">Ready to start?</h2>
-            <p className="text-gray-500 text-sm mt-2">Sign in with GitHub to access the demo or your licensed installation.</p>
+            <p className="text-gray-500 text-sm mt-2">Try the demo instantly, or sign in with GitHub to connect your repo.</p>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8">
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8 space-y-3">
             {error && (
-              <div className="mb-5 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <div className="p-4 bg-red-50 border border-red-200 rounded-lg mb-2">
                 <p className="text-sm text-red-700">{ERROR_MESSAGES[error] ?? `Error: ${error}`}</p>
               </div>
             )}
 
-            <a href={loginUrl} className="btn-primary w-full justify-center text-base py-3 gap-3">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-              </svg>
-              Continue with GitHub
+            {/* Demo — no OAuth required */}
+            <a href="/api/auth/demo" className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg transition-colors text-base">
+              ✨ Try Demo — No sign-in needed
             </a>
 
-            <div className="mt-5 pt-5 border-t border-gray-100 space-y-2">
+            <div className="flex items-center gap-3 py-1">
+              <div className="flex-1 h-px bg-gray-200" />
+              <span className="text-xs text-gray-400">or</span>
+              <div className="flex-1 h-px bg-gray-200" />
+            </div>
+
+            {/* GitHub OAuth */}
+            <a href={loginUrl} className="btn-primary w-full justify-center text-base py-3 gap-3">
+              <GitHubIcon /> Continue with GitHub
+            </a>
+
+            <div className="pt-3 border-t border-gray-100 space-y-1.5">
               <p className="text-xs text-gray-400 text-center">
-                Required GitHub scopes: <code className="bg-gray-100 px-1 rounded">repo</code> · <code className="bg-gray-100 px-1 rounded">read:user</code>
+                GitHub OAuth required to save changes and access your repo.
               </p>
               <p className="text-xs text-gray-400 text-center">
-                No <code className="bg-gray-100 px-1 rounded">LICENSE_KEY</code>? You&apos;ll enter{' '}
-                <span className="font-medium text-amber-600">Demo Mode</span> automatically.
+                Scopes: <code className="bg-gray-100 px-1 rounded">repo</code> · <code className="bg-gray-100 px-1 rounded">read:user</code>
               </p>
             </div>
           </div>
