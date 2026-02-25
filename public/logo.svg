@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Vault body -->
+  <rect x="30" y="50" width="140" height="120" rx="14" fill="#4f46e5"/>
+  <!-- Vault door inset -->
+  <rect x="50" y="68" width="100" height="84" rx="10" fill="#312e81"/>
+  <!-- Dial ring -->
+  <circle cx="100" cy="110" r="28" stroke="#6366f1" stroke-width="5" fill="#1e1b4b"/>
+  <!-- Dial inner -->
+  <circle cx="100" cy="110" r="16" fill="#4f46e5"/>
+  <!-- Dial tick marks -->
+  <line x1="100" y1="85" x2="100" y2="91" stroke="#e0e7ff" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="100" y1="129" x2="100" y2="135" stroke="#e0e7ff" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="75" y1="110" x2="81" y2="110" stroke="#e0e7ff" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="119" y1="110" x2="125" y2="110" stroke="#e0e7ff" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Dial pointer -->
+  <line x1="100" y1="110" x2="111" y2="99" stroke="#c7d2fe" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="100" cy="110" r="3.5" fill="#e0e7ff"/>
+  <!-- Handle bar -->
+  <rect x="142" y="104" width="10" height="12" rx="5" fill="#6366f1"/>
+  <!-- Lock bolt holes -->
+  <circle cx="62" cy="80" r="4" fill="#4f46e5"/>
+  <circle cx="62" cy="140" r="4" fill="#4f46e5"/>
+  <!-- Checkmark answer hint -->
+  <path d="M88 110 l7 7 l12 -12" stroke="#c7d2fe" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Top hinge plates -->
+  <rect x="30" y="62" width="14" height="8" rx="3" fill="#6366f1"/>
+  <rect x="30" y="150" width="14" height="8" rx="3" fill="#6366f1"/>
+</svg>
