@@ -41,27 +41,30 @@ function BrowserFrame({ children }: { children: React.ReactNode }) {
       {/* App shell */}
       <div className="flex" style={{ height: '340px' }}>
         {/* Sidebar */}
-        <div className="w-44 bg-gray-50 border-r border-gray-200 flex-shrink-0 py-3 px-2 space-y-0.5">
-          {[
-            { icon: '⊞', label: 'Dashboard' },
-            { icon: '📚', label: 'Answers',   active: false },
-            { icon: '🗂️', label: 'Evidence',  active: false },
-            { icon: '📋', label: 'Questions', active: false },
-            { icon: '⚙️', label: 'Settings',  active: false },
-          ].map((item, i) => (
-            <div
-              key={item.label}
-              className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium ${
-                i === 0 ? 'bg-brand-100 text-brand-700' : 'text-gray-500'
-              }`}
-            >
-              <span>{item.icon}</span>
-              {item.label}
-            </div>
-          ))}
-          <div className="absolute bottom-4 left-2 right-2 flex items-center gap-1.5 px-2 py-1.5">
-            <div className="w-5 h-5 rounded-full bg-gray-300" />
-            <span className="text-xs text-gray-400">demo user</span>
+        <div className="w-44 bg-gray-50 border-r border-gray-200 flex-shrink-0 py-3 px-2 flex flex-col">
+          <div className="space-y-0.5 flex-1">
+            {[
+              { icon: '⊞', label: 'Dashboard' },
+              { icon: '📚', label: 'Answers' },
+              { icon: '🗂️', label: 'Evidence' },
+              { icon: '📋', label: 'Questions' },
+              { icon: '⚙️', label: 'Settings' },
+            ].map((item, i) => (
+              <div
+                key={item.label}
+                className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-medium ${
+                  i === 0 ? 'bg-brand-100 text-brand-700' : 'text-gray-500'
+                }`}
+              >
+                <span>{item.icon}</span>
+                {item.label}
+              </div>
+            ))}
+          </div>
+          {/* User row pinned to bottom */}
+          <div className="flex items-center gap-1.5 px-2 py-1.5 mt-2 border-t border-gray-200">
+            <div className="w-5 h-5 rounded-full bg-gray-300 flex-shrink-0" />
+            <span className="text-xs text-gray-400 truncate">demo user</span>
           </div>
         </div>
         {/* Content */}
@@ -268,7 +271,7 @@ export default function ProductShowcase() {
       {/* Floating glow */}
       <div className="absolute -inset-4 bg-gradient-to-r from-brand-500/10 via-purple-500/10 to-indigo-500/10 rounded-2xl blur-2xl" />
 
-      <div className="relative anim-float">
+      <div className="relative">
         <BrowserFrame>
           <div key={`${screen}-${screenIdx}`} className="h-full">
             {screen === 'answers' && <AnswersScreen tick={tick} />}
