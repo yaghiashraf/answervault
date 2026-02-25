@@ -8,8 +8,8 @@ const ALGORITHM = 'HS256';
 const EXPIRY = '7d';
 
 function getSecret(): Uint8Array {
-  const secret = process.env.NEXTAUTH_SECRET;
-  if (!secret) throw new Error('NEXTAUTH_SECRET env var is required');
+  const secret = process.env.SESSION_SECRET ?? process.env.NEXTAUTH_SECRET;
+  if (!secret) throw new Error('SESSION_SECRET (or NEXTAUTH_SECRET) env var is required');
   return new TextEncoder().encode(secret);
 }
 
